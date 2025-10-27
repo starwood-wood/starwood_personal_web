@@ -1,6 +1,7 @@
 # STARWOOD_2.0
 
 This template should help get you started developing with Vue 3 in Vite.
+<strong>Update (2025.10.27)</strong>: Added sticky navigation with smooth scroll animations.
 
 ## Recommended IDE Setup
 

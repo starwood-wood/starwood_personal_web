@@ -1,24 +1,16 @@
 <template>
   <div class="home-container">
-    <!-- 英雄区域 -->
-    <el-row class="hero-section" justify="center" align="middle">
-      <el-col :xs="24" :sm="16" :md="12">
-        <div class="hero-content">
-          <h1 class="hero-title">欢迎来到我的项目</h1>
-          <p class="hero-description">
-            这是一个基于 Vue 3 + Element Plus 的现代化项目
-          </p>
-          <div class="hero-actions">
-            <el-button type="primary" size="large" @click="getStarted">
-              开始使用
-            </el-button>
-            <el-button size="large" @click="learnMore">
-              了解更多
-            </el-button>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
+    <!-- 顶部展示区域 -->
+     <div class="common-layout">
+      <Carousel 
+        :images="carouselImages"
+        :show-buttons="true"
+        :primary-button-text="'立即开始'"
+        :secondary-button-text="'了解更多'"
+        @primary-button-click="handleGetStarted"
+        @secondary-button-click="handleLearnMore"
+      />
+    </div>
 
     <!-- 特性介绍 -->
     <div class="features-section">
@@ -64,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   Monitor,
@@ -75,7 +67,23 @@ import {
   InfoFilled
 } from '@element-plus/icons-vue'
 
+// 引入轮播组件
+import Carousel from '@/components/common/Carousel.vue'
+
+// 引入图片资源
+import christmasImage from '@/assets/images/home/Christmas.png'
+import sladeImage from '@/assets/images/home/Slade.png'
+import starcatImage from '@/assets/images/home/starcat.png'
+
 const router = useRouter()
+
+// 轮播图数据
+const carouselImages = ref([])
+
+// 初始化轮播图数据
+const initCarousel = () => {
+  carouselImages.value = [christmasImage, sladeImage, starcatImage] // 用实际图片替换
+}
 
 const features = ref([
   {
@@ -108,6 +116,11 @@ const quickNavs = ref([
   { name: '用户指南', path: '/guide', icon: User }
 ])
 
+onMounted(() => {
+  // 可以在这里执行一些初始化操作
+  initCarousel()
+})
+
 const getStarted = () => {
   ElMessage.success('开始使用项目！')
 }
@@ -123,30 +136,19 @@ const learnMore = () => {
   /* height: 1000000px; */
 }
 
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 100px 20px;
-  text-align: center;
-}
-
-.hero-title {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
-
-.hero-description {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  opacity: 0.9;
-}
-
-.hero-actions {
+.common-layout {
   display: flex;
-  gap: 20px;
+  background: linear-gradient(135deg, #f7ea92 0%, #e7bdc6 100%);
+  color: white;
+  /* padding: 200px 20px; */
+}
+
+.top-pics{
+  flex: 1;
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
+  /* height: 800px; */
+  /* gap: 20px; */
 }
 
 .features-section,

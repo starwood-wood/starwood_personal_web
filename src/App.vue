@@ -4,6 +4,7 @@
     <div id="app">
       <AppHeader />
       <main class="main-content">
+        <el-backtop :right="50" :bottom="100" />
         <router-view />
       </main>
       <AppFooter />

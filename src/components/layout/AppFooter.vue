@@ -1,7 +1,7 @@
 <template>
   <el-footer class="app-footer">
     <div class="footer-content">
-      <p>&copy; 2024 starwood. 保留所有权利.</p>
+      <p>&copy; 2025 starwood. 保留所有权利.</p>
     </div>
   </el-footer>
 </template>

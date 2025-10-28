@@ -21,7 +21,14 @@
         <el-menu-item index="/trade">约稿</el-menu-item>
         <el-menu-item index="/commission">委托展示</el-menu-item>
         <el-menu-item index="/about">关于我们</el-menu-item>
-        <el-menu-item index="/contact">联系我们</el-menu-item>
+        <!-- <el-menu-item index="/contact">联系我们</el-menu-item> -->
+        <el-sub-menu index="/contact">
+          <template #title> 联系我们 </template>
+          <el-menu-item index="qq">QQ</el-menu-item>
+          <el-menu-item index="x">X</el-menu-item>
+          <el-menu-item index="bilibili">Bilibili</el-menu-item>
+        </el-sub-menu>
+        
         
       </el-menu>
     </div>
@@ -36,6 +43,18 @@ import logo from '@/assets/images/logo.png'
 const route = useRoute()
 const activeIndex = ref(route.path)
 const fixed = ref(false)
+
+// 点击下拉
+const handleSelect = (key, keyPath) => {
+  activeIndex.value = key
+  if (key === 'qq') {
+    window.open('https://jq.qq.com/?_wv=1027&k=5tG6g3jD', '_blank')
+  } else if (key === 'x') {
+    window.open('https://twitter.com', '_blank')
+  } else if (key === 'bilibili') {
+    window.open('https://space.bilibili.com/14097423', '_blank')
+  }
+}
 
 // 滚动监听函数
 const handlescroll = () => {
@@ -56,9 +75,9 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handlescroll)
 })
 
-const handleSelect = (key) => {
-  activeIndex.value = key
-}
+// const handleSelect = (key) => {
+//   activeIndex.value = key
+// }
 </script>
 
 <style scoped>
@@ -98,7 +117,7 @@ const handleSelect = (key) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -120,21 +139,33 @@ const handleSelect = (key) => {
   height: 100px; /* 根据你的图片调整高度 */
   width: auto; /* 保持宽高比 */
   /* 或者设置固定宽度：width: 120px; */
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+
 }
 
 /* 添加悬停效果 */
 .logo-image:hover {
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+  opacity: 0.6;
 }
 .nav-menu {
+  /* min-width: 10px; */
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
   border-bottom: none;
   height: auto;
 }
 
 .nav-menu .el-menu-item {
-  font-size: 17px;
+  font-size: 18px;
   height: 80px;
-  padding: 0 20px;
+  padding: 0 35px;
 }
+
+.el-sub-menu /deep/ .el-sub-menu__title {
+  font-size: 18px;
+
+}
+
 </style>

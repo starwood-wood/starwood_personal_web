@@ -7,6 +7,12 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  // {
+  //   path: '/trade',
+  //   name: 'Trade',
+  //   // 懒加载组件
+  //   component: Trade
+  // },
 //   {
 //     path: '/about',
 //     name: 'About',

@@ -3,6 +3,8 @@
 This template should help get you started developing with Vue 3 in Vite.
 <strong>Update (2025.10.27)</strong>: Added sticky navigation with smooth scroll animations.
 <strong>Update (2025.10.28)</strong>: Updated the top image display area of the home page, fixed the bug where the top navigation bar was collapsed without being triggered, added a contact information area, and added buttons to the home page display area.
+<strong>Update (2025.10.30)</strong>: Responsive layout modification, button size modification, canvas partition encapsulation, canvas partition image display design & coding.
+
 
 ## Recommended IDE Setup
 

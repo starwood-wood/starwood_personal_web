@@ -2,36 +2,23 @@
   <div class="home-container">
     <!-- 顶部展示区域 -->
      <div class="common-layout">
+      <!-- <h1 class="hero-title">FUREST</h1> -->
       <Carousel 
         :images="carouselImages"
         :show-buttons="true"
-        :primary-button-text="'立即开始'"
-        :secondary-button-text="'了解更多'"
+        :show-text="true"
+        title="FUREST·HOUSE"
+        description="开始我们的旅程"
+        :primary-button-text="'委托申请'"
+        :secondary-button-text="'更多例图'"
         @primary-button-click="handleGetStarted"
         @secondary-button-click="handleLearnMore"
       />
     </div>
 
-    <!-- 特性介绍 -->
     <div class="features-section">
-      <div class="container">
-        <h2 class="section-title">项目特性</h2>
-        <el-row :gutter="30">
-          <el-col :xs="24" :sm="12" :md="8" v-for="feature in features" :key="feature.id">
-            <el-card class="feature-card" shadow="hover">
-              <template #header>
-                <div class="feature-header">
-                  <el-icon size="24" :color="feature.color">
-                    <component :is="feature.icon" />
-                  </el-icon>
-                  <h3>{{ feature.title }}</h3>
-                </div>
-              </template>
-              <p>{{ feature.description }}</p>
-            </el-card>
-          </el-col>
-        </el-row>
-      </div>
+      <StyleUnion
+      />
     </div>
 
     <!-- 快速导航 -->
@@ -60,6 +47,7 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   Monitor,
+  StarFilled,
   Setting,
   User,
   Document,
@@ -69,6 +57,9 @@ import {
 
 // 引入轮播组件
 import Carousel from '@/components/common/Carousel.vue'
+
+// 引入画风分区组件
+import StyleUnion from '@/components/home/StyleUnion.vue'
 
 // 引入图片资源
 import christmasImage from '@/assets/images/home/Christmas.png'
@@ -80,34 +71,14 @@ const router = useRouter()
 // 轮播图数据
 const carouselImages = ref([])
 
+// 初始化画风分区组件
+const styleFeatures = ref([])
+
 // 初始化轮播图数据
 const initCarousel = () => {
   carouselImages.value = [christmasImage, sladeImage, starcatImage] // 用实际图片替换
 }
 
-const features = ref([
-  {
-    id: 1,
-    title: '现代化设计',
-    description: '采用最新的 Vue 3 和 Element Plus，提供优秀的用户体验',
-    icon: Monitor,
-    color: '#409EFF'
-  },
-  {
-    id: 2,
-    title: '响应式布局',
-    description: '完美适配各种设备，从手机到桌面电脑都能良好显示',
-    icon: Setting,
-    color: '#67C23A'
-  },
-  {
-    id: 3,
-    title: '易于使用',
-    description: '简洁直观的界面设计，让用户轻松上手',
-    icon: User,
-    color: '#E6A23C'
-  }
-])
 
 const quickNavs = ref([
   { name: '关于我们', path: '/about', icon: InfoFilled },
@@ -151,7 +122,6 @@ const learnMore = () => {
   /* gap: 20px; */
 }
 
-.features-section,
 .quick-nav-section {
   padding: 80px 20px;
 }
@@ -165,22 +135,6 @@ const learnMore = () => {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 50px;
-  color: #303133;
-}
-
-.feature-card {
-  height: 100%;
-  margin-bottom: 20px;
-}
-
-.feature-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.feature-header h3 {
-  margin: 0;
   color: #303133;
 }
 
@@ -209,14 +163,6 @@ const learnMore = () => {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-description {
-    font-size: 1rem;
-  }
-  
   .section-title {
     font-size: 2rem;
   }

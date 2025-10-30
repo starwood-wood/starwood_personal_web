@@ -124,6 +124,7 @@ onUnmounted(() => {
 
 .logo {
   display: flex;
+  margin-left: 20px;
   align-items: center;
   height: 100%;
 }

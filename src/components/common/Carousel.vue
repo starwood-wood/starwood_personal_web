@@ -9,8 +9,24 @@
         <el-image :src="image" fit="cover" class="carousel-image" />
       </div>
     </div>
+
+     <div class="star">
+        <router-link to="/about">
+          <img 
+            :src="star" 
+            alt="staricon" 
+            class="star-icon"
+          />
+        </router-link>
+      </div>
     
-    <!-- 固定按钮区域 - 放在轮播容器内但在轮播图外部 -->
+    <!-- 固定文字内容区域 -->
+    <div class="carousel-text" v-if="showText">
+      <p class="carousel-title" v-if="title">{{ title }}</p>
+      <p class="carousel-description" v-if="description">{{ description }}</p>
+    </div>
+    
+    <!-- 固定按钮区域 -->
     <div class="carousel-buttons" v-if="showButtons">
       <el-button 
         type="primary" 
@@ -53,6 +69,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue'
+import star from '@/assets/images/starcloseicon.png'
+
 
 // 定义组件属性
 const props = defineProps({
@@ -72,6 +90,19 @@ const props = defineProps({
   height: {
     type: String,
     default: '500px'
+  },
+  // 文字内容 - 固定显示
+  showText: {
+    type: Boolean,
+    default: false
+  },
+  title: {
+    type: String,
+    default: ''
+  },
+  description: {
+    type: String,
+    default: ''
   },
   // 按钮相关属性
   showButtons: {
@@ -188,10 +219,67 @@ onUnmounted(() => {
   object-fit: cover;
 }
 
-/* 固定按钮区域样式 - 相对于轮播容器定位 */
+/* star头像 */
+.star {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.star-icon {
+  width: auto;
+  height: 300px;
+  transition: all 0.3s ease;
+}
+
+.star-icon:hover {
+  height: 350px;
+  transform: all 0.3s ease 1.1;
+}
+
+/* 固定文字内容区域 */
+.carousel-text {
+  position: absolute;
+  top: 60%; /* 调整文字位置 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+
+  /* color: linear-gradient(135deg, #f7ea92 0%, #e7bdc6 100%); */
+  z-index: 3;
+  width: 80%;
+  max-width: 800px;
+}
+
+.carousel-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  -webkit-text-stroke: 9px rgba(255, 255, 255, 0);
+  background: -webkit-linear-gradient(-90deg, #f7ea92 0%, #e7bdc6 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  line-height: 1.2;
+}
+
+.carousel-description {
+  font-size: 2rem;
+  /* text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); */
+  -webkit-text-stroke: 5px rgba(255, 255, 255, 0);
+  background: -webkit-linear-gradient(-90deg, #f7ea92 0%, #e7bdc6 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  line-height: 1.5;
+  /* opacity: 0.9; */
+}
+
+/* 固定按钮区域样式 */
 .carousel-buttons {
   position: absolute;
-  top: 80%; /* 中间偏下位置 */
+  top: 85%; /* 放在文字下方 */
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -199,9 +287,8 @@ onUnmounted(() => {
   gap: 30px;
   align-items: center;
   justify-content: center;
-  z-index: 5;
+  z-index: 4; /* 在文字上方 */
   width: 100%;
-  pointer-events: auto; /* 确保按钮可以点击 */
 }
 
 .action-btn {
@@ -214,7 +301,9 @@ onUnmounted(() => {
   transition: all 0.3s ease;
   padding: 0 30px;
   white-space: nowrap;
-  pointer-events: auto; /* 确保按钮可以点击 */
+  pointer-events: auto;
+  border: none;
+  color: white;
 }
 
 .action-btn:hover {
@@ -227,13 +316,11 @@ onUnmounted(() => {
 }
 
 .primary-btn {
-  background: linear-gradient(45deg, #409EFF, #badbff);
-  border: none;
+  background: linear-gradient(45deg, #409EFF, #66b1ff);
 }
 
 .secondary-btn {
-  background: linear-gradient(45deg, #67C23A, #f5db7e);
-  border: none;
+  background: linear-gradient(45deg, #67C23A, #85ce61);
 }
 
 /* 左右切换按钮 */
@@ -252,7 +339,7 @@ onUnmounted(() => {
   cursor: pointer;
   opacity: 0;
   transition: all 0.3s ease-in-out;
-  z-index: 10;
+  z-index: 5; /* 在最上层 */
 }
 
 .carousel-btn:hover {
@@ -276,7 +363,7 @@ onUnmounted(() => {
   transform: translateX(-50%);
   display: flex;
   gap: 10px;
-  z-index: 10;
+  z-index: 5;
 }
 
 .carousel-indicators span {
@@ -293,37 +380,47 @@ onUnmounted(() => {
 }
 
 /* 响应式设计 */
-@media (max-width: 1024px) {
-  .carousel-buttons {
-    gap: 20px;
-  }
-  
-  .action-btn {
-    min-width: 180px;
-    height: 55px;
-    font-size: 16px;
-    padding: 0 25px;
-  }
-}
-
 @media (max-width: 768px) {
+  .star{
+    top: 62%;
+  }
+  .star-icon {
+    height: 100px;
+  }
+
+  .star-icon:hover {
+    height: 120px;
+  }
+
   .carousel-container {
     height: 400px;
+  }
+  
+  .carousel-text {
+    top: 35%; 
+  }
+  
+  .carousel-title {
+    font-size: 2.5rem;
+  }
+  
+  .carousel-description {
+    font-size: 2rem;
   }
   
   .carousel-buttons {
     flex-direction: row;
     gap: 15px;
-    top: 65%;
-    width: 90%;
+    top: 80%; 
+    width: 800px;
     flex-wrap: wrap;
     justify-content: center;
   }
   
   .action-btn {
-    min-width: 140px;
+    width: auto;
     height: 50px;
-    font-size: 14px;
+    font-size: 20px;
     padding: 0 20px;
     flex: 0 1 auto;
   }
@@ -341,25 +438,61 @@ onUnmounted(() => {
   }
 }
 
-/* 超小屏幕适配 */
-@media (max-width: 480px) {
+@media (min-width: 768px) {
+  .star-icon {
+    height: 200px;
+  }
+
+  .star-icon:hover {
+    height: 250px;
+  }
+
+
+  .carousel-text {
+    width: 90%;
+  }
+  
+  .carousel-title {
+    font-size: 4rem;
+  }
+  
+  .carousel-description {
+    font-size: 2rem;
+  }
+  
   .carousel-buttons {
-    gap: 12px;
-    width: 95%;
+    gap: 20px;
   }
   
   .action-btn {
-    min-width: 120px;
-    height: 45px;
-    font-size: 13px;
-    padding: 0 15px;
+    min-width: 180px;
+    height: 55px;
+    font-size: 17px;
+    padding: 0 25px;
   }
 }
 
+
 /* 超大屏幕适配 */
-@media (min-width: 1600px) {
+@media (min-width: 1024px) {
+  .star-icon {
+    height: 300px;
+  }
+
+  .star-icon:hover {
+    height: 400px;
+  }
+
   .carousel-container {
     height: 850px;
+  }
+  
+  .carousel-title {
+    font-size: 6.5rem;
+  }
+  
+  .carousel-description {
+    font-size: 3.25rem;
   }
   
   .carousel-buttons {

@@ -1,4 +1,3 @@
-<!-- src/App.vue -->
 <template>
   <el-config-provider :locale="zhCn">
     <div id="app">
